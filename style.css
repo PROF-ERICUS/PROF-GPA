@@ -1,10 +1,10 @@
-/* General Styling */
 body {
     font-family: Arial, sans-serif;
     background: #f9f9f9;
     color: #333;
     margin: 0;
     padding: 0;
+    transition: background 0.5s ease;
   }
   
   .container {
@@ -36,28 +36,37 @@ body {
     background: #0056b3;
   }
   
-  .courseRow, .semesterRow {
+  .courseRow {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
   }
   
-  .courseRow input, .semesterRow input {
+  .courseRow input {
     flex: 1;
   }
   
-  /* Popup Styling */
-  #popup {
+  .grade-box {
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #e0e0e0;
+    color: #333;
+    align-self: center;
+  }
+  
+  .popup {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: none; /* Initially hidden */
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 999;
+    animation: fadeIn 0.8s ease-in-out;
   }
   
   .popup-content {
@@ -68,12 +77,11 @@ body {
     max-width: 400px;
   }
   
-  .popup button {
-    margin-top: 10px;
-    padding: 8px 20px;
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
   
-  /* Dark Mode Styles */
   body.dark {
     background: #121212;
     color: #f5f5f5;
@@ -90,7 +98,6 @@ body {
     background: #1e1e1e;
   }
   
-  /* Developer Info */
   .developer-info {
     display: flex;
     align-items: center;
@@ -116,41 +123,15 @@ body {
     color: gray;
   }
   
-  /* Result Display Styling */
   .result-display {
-    margin-top: 20px; /* Space above result display */
-    padding: 15px;
-    background-color: #f1f1f1; /* Light gray background for visibility */
-    border-radius: 5px;
-    border: 1px solid #ccc; /* Light border */
-  }
-  
-  /* Table Styling */
-  .table-container {
     margin-top: 20px;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ccc; /* Light border for table cells */
-  }
-  
-  th {
-    background-color: #007bff; /* Header background color */
-    color: white; /* Header text color */
-  }
-  
-  tbody tr:hover {
-    background-color: #f1f1f1; /* Highlight row on hover */
+    padding: 15px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
   }
   
   .semesterResult {
-    margin-top: 10px; /* Space above each semester result */
+    margin-top: 10px;
   }
   
