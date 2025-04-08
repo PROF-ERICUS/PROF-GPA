@@ -9,15 +9,15 @@
 <body>
   <div id="popup" class="popup">
     <div class="popup-content">
-      <h3>Welcome to GCTU GPA & CGPA Calculator</h3>
-      <p>This tool helps you calculate your academic performance based on the official grading system.</p>
-      <button onclick="closePopup()">Get Started</button>
+      <h3>Designed & Developed by Eric Andoh</h3>
+      <p>Eric is an IT student at GCTU and this system helps you calculate your academic performance using the official GCTU grading system.</p>
+      <button onclick="closePopup()">Continue</button>
     </div>
   </div>
 
   <div class="container">
     <div class="developer-info">
-      <img src="prof.jpg"Developer Profile">
+      <img src="vault.jpg" alt="Developer Profile">
       <div>
         <h3>Eric Andoh</h3>
         <p>Developer</p>
@@ -38,7 +38,7 @@
               <input type="text" placeholder="Course Name" required>
               <input type="number" placeholder="Credit Hours" min="1" required>
               <input type="number" placeholder="Marks (0-100)" min="0" max="100" required>
-              <span class="grade"></span>
+              <span class="grade-box"></span>
             </div>
           </div>
           <button type="button" onclick="addCourse(this)">Add Course</button>
@@ -49,8 +49,8 @@
       <button type="button" onclick="addSemester()">Add Another Semester</button>
     </form>
     <button type="button" onclick="calculateCGPA()">Calculate CGPA</button>
+    <button type="button" onclick="resetForm()">Reset All</button>
 
-    <!-- Separate div for CGPA result display -->
     <div id="cgpaResult" class="result-display"></div>
   </div>
 
