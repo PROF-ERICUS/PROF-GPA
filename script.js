@@ -1,4 +1,3 @@
-// Function to convert marks to grade
 function getGrade(marks) {
     if (marks >= 80) return 'A';
     if (marks >= 75) return 'A-';
@@ -12,7 +11,6 @@ function getGrade(marks) {
     return 'F';
   }
   
-  // Function to classify the GPA
   function classifyGPA(gpa) {
     if (gpa >= 3.60) return 'First Class';
     if (gpa >= 3.00) return 'Second Class Upper';
@@ -21,11 +19,9 @@ function getGrade(marks) {
     return 'Fail';
   }
   
-  // Variables to track total points and credits for CGPA
   let totalGpaPoints = 0;
   let totalCredits = 0;
   
-  // Function to add a course input row for a semester
   function addCourse(button) {
     const courseInputs = button.previousElementSibling;
     const row = document.createElement('div');
@@ -34,12 +30,11 @@ function getGrade(marks) {
       <input type="text" placeholder="Course Name" required>
       <input type="number" placeholder="Credit Hours" min="1" required>
       <input type="number" placeholder="Marks (0-100)" min="0" max="100" required>
-      <span class="grade"></span>
+      <span class="grade-box"></span>
     `;
     courseInputs.appendChild(row);
   }
   
-  // Function to calculate the GPA for a specific semester
   function calculateSemesterGPA(button) {
     const semesterSection = button.closest('.semesterSection');
     const courseRows = semesterSection.querySelectorAll('.courseRow');
@@ -57,7 +52,10 @@ function getGrade(marks) {
         'C+': 2.75, 'C': 2.50, 'C-': 2.00, 'D': 1.50, 'F': 0
       }[grade];
   
-      row.querySelector('.grade').innerText = `Grade: ${grade}`;
+      const gradeBox = row.querySelector('.grade-box');
+      gradeBox.innerText = grade;
+      gradeBox.style.background = point >= 3.0 ? '#d4edda' : point >= 2.0 ? '#fff3cd' : '#f8d7da';
+      gradeBox.style.color = '#333';
   
       if (point !== undefined) {
         semesterPoints += point * credit;
@@ -68,15 +66,13 @@ function getGrade(marks) {
     const semesterResult = semesterSection.querySelector('.semesterResult');
     if (semesterCredits > 0) {
       const gpa = (semesterPoints / semesterCredits).toFixed(2);
-      const classLabel = classifyGPA(gpa); // Get the class based on GPA
+      const classLabel = classifyGPA(gpa);
   
-      // Update total points and credits for CGPA calculation
       totalGpaPoints += semesterPoints;
       totalCredits += semesterCredits;
   
-      // Calculate CGPA
       const cgpa = (totalGpaPoints / totalCredits).toFixed(2);
-      const cgpaClassLabel = classifyGPA(cgpa); // Get the class based on CGPA
+      const cgpaClassLabel = classifyGPA(cgpa);
   
       semesterResult.innerText = `Semester GPA: ${gpa} (Total Credits: ${semesterCredits}) - Class: ${classLabel}`;
       document.getElementById('cgpaResult').innerText = `CGPA: ${cgpa} (Total Credits: ${totalCredits}) - Class: ${cgpaClassLabel}`;
@@ -85,7 +81,6 @@ function getGrade(marks) {
     }
   }
   
-  // Function to add a new semester section
   function addSemester() {
     const semesterInputs = document.getElementById('semesterInputs');
     const semesterCount = semesterInputs.getElementsByClassName('semesterSection').length + 1;
@@ -99,7 +94,7 @@ function getGrade(marks) {
           <input type="text" placeholder="Course Name" required>
           <input type="number" placeholder="Credit Hours" min="1" required>
           <input type="number" placeholder="Marks (0-100)" min="0" max="100" required>
-          <span class="grade"></span>
+          <span class="grade-box"></span>
         </div>
       </div>
       <button type="button" onclick="addCourse(this)">Add Course</button>
@@ -109,28 +104,36 @@ function getGrade(marks) {
     semesterInputs.appendChild(semesterSection);
   }
   
-  // Close popup function
-  function closePopup() {
-    document.getElementById('popup').style.display = 'none';
-    localStorage.setItem('popupSeen', 'true');
+  function calculateCGPA() {
+    const cgpa = (totalGpaPoints / totalCredits).toFixed(2);
+    const cgpaClassLabel = classifyGPA(cgpa);
+    document.getElementById('cgpaResult').innerText = `CGPA: ${cgpa} (Total Credits: ${totalCredits}) - Class: ${cgpaClassLabel}`;
   }
   
-  // Show popup on window load
-  window.onload = function () {
-    const popupSeen = localStorage.getItem('popupSeen');
-    if (!popupSeen) {
-      setTimeout(() => {
-        document.getElementById('popup').style.display = 'flex';
-      }, 500);
-    }
+  function resetForm() {
+    document.getElementById('semesterInputs').innerHTML = '';
+    document.getElementById('cgpaResult').innerText = '';
+    totalGpaPoints = 0;
+    totalCredits = 0;
+    addSemester();
+  }
   
-    // Check and apply dark mode preference on load
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+  
+  window.onload = function () {
+    setTimeout(() => {
+      document.getElementById('popup').style.display = 'flex';
+    }, 500);
+  
     const darkModePreference = localStorage.getItem('darkMode') === 'true';
     document.getElementById('modeToggle').checked = darkModePreference;
     document.body.classList.toggle('dark', darkModePreference);
+  
+    addSemester();
   };
   
-  // Dark mode toggle
   document.getElementById('modeToggle').addEventListener('change', function () {
     const isDarkMode = this.checked;
     document.body.classList.toggle('dark', isDarkMode);
